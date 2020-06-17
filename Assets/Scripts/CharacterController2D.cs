@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
-using UnityEngine.SceneManagement; // include so we can load new scenes
+using UnityEngine.SceneManagement;
+using Utility;
 
 public class CharacterController2D : MonoBehaviour {
 
@@ -52,6 +53,7 @@ public class CharacterController2D : MonoBehaviour {
 	private bool _canDounbleJump = false;
 
 	public float constantMoveSpeed = 5f;
+	
 	// store the layer the player is on (setup in Awake)
 	int _playerLayer;
 
@@ -59,8 +61,10 @@ public class CharacterController2D : MonoBehaviour {
 	int _platformLayer;
 	
 	// Hook happens first: initialization. Similar to constructor
-	void Awake () {
+	void Awake ()
+	{
 		constantMoving = true;
+		// constantMoving = false;
 		
 		// get a reference to the components we are going to be changing and store a reference for efficiency purposes
 		_transform = GetComponent<Transform> ();
@@ -152,7 +156,7 @@ public class CharacterController2D : MonoBehaviour {
 		if (constantMoving)
 		{
 			_rigidbody.velocity = new Vector2(constantMoveSpeed, 0);
-			Physics2D.gravity = new Vector2(0, constantMoveSpeed * -25f);
+			// Physics2D.gravity = new Vector2(0, -5);
 		}
 	}
 
@@ -189,6 +193,11 @@ public class CharacterController2D : MonoBehaviour {
 		{
 			this.transform.parent = other.transform;
 		}
+
+		if (other.gameObject.tag == "Ground")
+		{
+			constantMoving = true;
+		}
 	}
 
 	// if the player exits a collision with a moving platform, then unchild it
@@ -205,13 +214,16 @@ public class CharacterController2D : MonoBehaviour {
 	 */
 	void DoJump()
 	{
-			// reset current vertical motion to 0 prior to jump
-			_vy = 0f;
+		// reset current vertical motion to 0 prior to jump
+		_vy = 0f;
 		if (constantMoving == false) {
 			// add a force in the up direction
 			_rigidbody.AddForce (new Vector2 (0, jumpForce));
 		} else {
-			_rigidbody.AddForce (new Vector2 (jumpForce * constantMoveSpeed * 2, jumpForce * constantMoveSpeed * 4));
+			_canDounbleJump = false;
+			constantMoving = false;
+			_rigidbody.AddForce (new Vector2 (0, jumpForce ));
+			// this.gameObject.transform.position.x = this.gameObject.transform.position.x + 0.5f;
 		}
 		// play the jump sound
 		PlaySound(jumpSFX);
