@@ -60,6 +60,8 @@ public class CharacterController2D : MonoBehaviour {
 	
 	// Hook happens first: initialization. Similar to constructor
 	void Awake () {
+		constantMoving = true;
+		
 		// get a reference to the components we are going to be changing and store a reference for efficiency purposes
 		_transform = GetComponent<Transform> ();
 		
@@ -209,7 +211,7 @@ public class CharacterController2D : MonoBehaviour {
 			// add a force in the up direction
 			_rigidbody.AddForce (new Vector2 (0, jumpForce));
 		} else {
-			_rigidbody.AddForce (new Vector2 (jumpForce * constantMoveSpeed * 2, jumpForce * constantMoveSpeed * 2));
+			_rigidbody.AddForce (new Vector2 (jumpForce * constantMoveSpeed * 2, jumpForce * constantMoveSpeed * 4));
 		}
 		// play the jump sound
 		PlaySound(jumpSFX);

@@ -2,9 +2,15 @@
 
 public class InvisiblePlatform : MonoBehaviour
 {
+    // Platform positions
     private float _xPosition;
+    private float _yPosition;
+    
     private GameObject _player;
     private float _playersPosition;
+    private float _playerJumpingPosition;
+    
+    private Vector3 _localScale;
 
 
     private void Awake()
@@ -14,20 +20,22 @@ public class InvisiblePlatform : MonoBehaviour
 
     void Update()
     {
-        _playersPosition = _player.transform.position.x;      
-        _xPosition = this.gameObject.transform.position.x;
-
+        _playersPosition = _player.transform.position.x;
+        _playerJumpingPosition = _player.transform.position.y;
         
-        Debug.Log("Platform Position:" + _xPosition);
-        Debug.Log("PLayers Position:" + _playersPosition);
+        _xPosition = gameObject.transform.position.x;
+        _yPosition = gameObject.transform.position.y;
 
         if (_playersPosition > _xPosition)
         {
-            Debug.Log("Set visibility to true");
-
-            // Make sprite visible    
-            _xPosition = _playersPosition;
-            // this.gameObject.SetActive(true);
+            Debug.Log("Set invisible platform visibility to true");
+            this.gameObject.transform.localScale = new Vector3(1, 1, 1);
+        }
+        
+        if (_playerJumpingPosition > _yPosition)
+        {
+            Debug.Log("Set invisible platform visibility to true");
+            this.gameObject.transform.localScale = new Vector3(1, 1, 1);
         }
     }
 }
