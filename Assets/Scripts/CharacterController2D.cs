@@ -156,7 +156,12 @@ public class CharacterController2D : MonoBehaviour {
 		if (constantMoving)
 		{
 			_rigidbody.velocity = new Vector2(constantMoveSpeed, 0);
-			// Physics2D.gravity = new Vector2(0, -5);
+		}
+
+		// Update x position while jumping
+		if (!_isGrounded)
+		{
+			_rigidbody.AddForce(Vector2.right * 200);
 		}
 	}
 
@@ -189,12 +194,12 @@ public class CharacterController2D : MonoBehaviour {
 	// so it will go for a ride on the MovingPlatform
 	void OnCollisionEnter2D(Collision2D other)
 	{
-		if (other.gameObject.tag=="MovingPlatform")
+		if (other.gameObject.tag == "MovingPlatform")
 		{
 			this.transform.parent = other.transform;
 		}
 
-		if (other.gameObject.tag == "Ground")
+		if (other.gameObject.tag == "Ground" || other.gameObject.tag == "InvisiblePlatform")
 		{
 			constantMoving = true;
 		}
@@ -223,7 +228,6 @@ public class CharacterController2D : MonoBehaviour {
 			_canDounbleJump = false;
 			constantMoving = false;
 			_rigidbody.AddForce (new Vector2 (0, jumpForce ));
-			// this.gameObject.transform.position.x = this.gameObject.transform.position.x + 0.5f;
 		}
 		// play the jump sound
 		PlaySound(jumpSFX);
@@ -319,11 +323,5 @@ public class CharacterController2D : MonoBehaviour {
 	public void EnemyBounce()
 	{
 		DoJump();
-	}
-
-	// Returns vx of the player
-	public float GetVx()
-	{
-		return this._vx;
 	}
 }

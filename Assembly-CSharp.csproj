@@ -71,6 +71,7 @@
      <Compile Include="Assets\Scripts\PlayerPrefManager.cs" />
      <Compile Include="Assets\Scripts\ScreenshotUtility.cs" />
      <Compile Include="Assets\Scripts\TimedObjectDestructor.cs" />
+     <Compile Include="Assets\Scripts\Utility\MathParabola.cs" />
      <Compile Include="Assets\Scripts\Victory.cs" />
  <Reference Include="Unity.Timeline.Editor">
  <HintPath>C:/My/Work/projects/tutorial/unity/SuperSpartyBros/SuperSpartyBros/Library/ScriptAssemblies/Unity.Timeline.Editor.dll</HintPath>
