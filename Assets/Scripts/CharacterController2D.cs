@@ -51,8 +51,9 @@ public class CharacterController2D : MonoBehaviour {
 	bool _isGrounded = false;
 	bool _isRunning = false;
 	private bool _canDounbleJump = false;
+	private bool _isAttacking = false;
 
-	public float constantMoveSpeed = 5f;
+	public float constantMoveSpeed = 7f;
 	
 	// store the layer the player is on (setup in Awake)
 	int _playerLayer;
@@ -63,8 +64,8 @@ public class CharacterController2D : MonoBehaviour {
 	// Hook happens first: initialization. Similar to constructor
 	void Awake ()
 	{
-		constantMoving = true;
-		// constantMoving = false;
+		// constantMoving = true;
+		constantMoving = false;
 		
 		// get a reference to the components we are going to be changing and store a reference for efficiency purposes
 		_transform = GetComponent<Transform> ();
@@ -101,13 +102,6 @@ public class CharacterController2D : MonoBehaviour {
 		// determine horizontal velocity change based on the horizontal input
 		_vx = Input.GetAxisRaw ("Horizontal");
 
-		// Determine if running based on the horizontal movement
-		if (_vx != 0) 
-		{
-			_isRunning = true;
-		} else {
-			_isRunning = false;
-		}
 
 		// set the running animation state
 		_animator.SetBool("Running", _isRunning);
@@ -137,7 +131,9 @@ public class CharacterController2D : MonoBehaviour {
 			// Disable double jump after jumping. It can be done once
 			_canDounbleJump = false;
 		}
-	
+		
+		DoAttack();
+		
 		// If the player stops jumping mid jump and player is not yet falling
 		// then set the vertical velocity to 0 (he will start to fall from gravity)
 		if(Input.GetButtonUp("Jump") && _vy>0f)
@@ -156,6 +152,17 @@ public class CharacterController2D : MonoBehaviour {
 		if (constantMoving)
 		{
 			_rigidbody.velocity = new Vector2(constantMoveSpeed, 0);
+			_isRunning = true;
+		}
+		else
+		{
+			// Determine if running based on the horizontal movement
+			if (_vx != 0) 
+			{
+				_isRunning = true;
+			} else {
+				_isRunning = false;
+			}
 		}
 
 		// Update x position while jumping
@@ -212,6 +219,11 @@ public class CharacterController2D : MonoBehaviour {
 		{
 			this.transform.parent = null;
 		}
+
+		if (other.gameObject.tag == "InvisiblePlatform")
+		{
+			constantMoving = false;
+		}
 	}
 	
 	/**
@@ -231,6 +243,21 @@ public class CharacterController2D : MonoBehaviour {
 		}
 		// play the jump sound
 		PlaySound(jumpSFX);
+	}
+
+	public void DoAttack()
+	{
+		if (Input.GetButtonDown("Fire1"))
+		{
+			_isAttacking = true;
+			// Debug.Log("Is attacking: " + _isAttacking);
+		}
+		
+		if (Input.GetButtonUp("Fire1"))
+		{
+			_isAttacking = false;
+			// Debug.Log("Is attacking: " + _isAttacking);
+		}
 	}
 
 	// do what needs to be done to freeze the player
@@ -323,5 +350,10 @@ public class CharacterController2D : MonoBehaviour {
 	public void EnemyBounce()
 	{
 		DoJump();
+	}
+
+	public bool GetIsAttacking()
+	{
+		return _isAttacking;
 	}
 }

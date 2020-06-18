@@ -29,13 +29,13 @@ public class InvisiblePlatform : MonoBehaviour
         if (_playersPosition > _xPosition)
         {
             Debug.Log("Set invisible platform visibility to true");
-            this.gameObject.transform.localScale = new Vector3(2, 1, 1);
+            this.gameObject.transform.localScale = new Vector3(this.gameObject.transform.localScale.x, 1, 1);
         }
         
         if (_playerJumpingPosition > _yPosition && _playersPosition > _xPosition - 1f)
         {
             Debug.Log("Set invisible platform visibility to true");
-            this.gameObject.transform.localScale = new Vector3(2, 1, 1);
+            this.gameObject.transform.localScale = new Vector3(this.gameObject.transform.localScale.x, 1, 1);
         }
     }
 }
