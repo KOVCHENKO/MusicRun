@@ -1,11 +1,9 @@
 ﻿using UnityEngine;
 using System.Collections;
 using UnityEngine.SceneManagement;
-using Utility;
 
 public class CharacterController2D : MonoBehaviour {
-
-	// player controls
+// player controls
 	[Range(0.0f, 10.0f)] // create a slider in the editor and set limits on moveSpeed
 	public float moveSpeed = 3f;
 
@@ -64,9 +62,6 @@ public class CharacterController2D : MonoBehaviour {
 	// Hook happens first: initialization. Similar to constructor
 	void Awake ()
 	{
-		// constantMoving = true;
-		constantMoving = false;
-		
 		// get a reference to the components we are going to be changing and store a reference for efficiency purposes
 		_transform = GetComponent<Transform> ();
 		
@@ -132,8 +127,6 @@ public class CharacterController2D : MonoBehaviour {
 			_canDounbleJump = false;
 		}
 		
-		DoAttack();
-		
 		// If the player stops jumping mid jump and player is not yet falling
 		// then set the vertical velocity to 0 (he will start to fall from gravity)
 		if(Input.GetButtonUp("Jump") && _vy>0f)
@@ -149,26 +142,12 @@ public class CharacterController2D : MonoBehaviour {
 		// NOTE: requires the platforms to be on a layer named "Platform"
 		Physics2D.IgnoreLayerCollision(_playerLayer, _platformLayer, (_vy > 0.0f));
 
-		if (constantMoving)
+		// Determine if running based on the horizontal movement
+		if (_vx != 0) 
 		{
-			_rigidbody.velocity = new Vector2(constantMoveSpeed, 0);
 			_isRunning = true;
-		}
-		else
-		{
-			// Determine if running based on the horizontal movement
-			if (_vx != 0) 
-			{
-				_isRunning = true;
-			} else {
-				_isRunning = false;
-			}
-		}
-
-		// Update x position while jumping
-		if (!_isGrounded)
-		{
-			_rigidbody.AddForce(Vector2.right * 200);
+		} else {
+			_isRunning = false;
 		}
 	}
 
@@ -233,31 +212,10 @@ public class CharacterController2D : MonoBehaviour {
 	{
 		// reset current vertical motion to 0 prior to jump
 		_vy = 0f;
-		if (constantMoving == false) {
-			// add a force in the up direction
-			_rigidbody.AddForce (new Vector2 (0, jumpForce));
-		} else {
-			_canDounbleJump = false;
-			constantMoving = false;
-			_rigidbody.AddForce (new Vector2 (0, jumpForce ));
-		}
+		// add a force in the up direction
+		_rigidbody.AddForce (new Vector2 (0, jumpForce));
 		// play the jump sound
 		PlaySound(jumpSFX);
-	}
-
-	public void DoAttack()
-	{
-		if (Input.GetButtonDown("Fire1"))
-		{
-			_isAttacking = true;
-			// Debug.Log("Is attacking: " + _isAttacking);
-		}
-		
-		if (Input.GetButtonUp("Fire1"))
-		{
-			_isAttacking = false;
-			// Debug.Log("Is attacking: " + _isAttacking);
-		}
 	}
 
 	// do what needs to be done to freeze the player
