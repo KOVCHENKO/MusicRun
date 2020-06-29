@@ -9755,6 +9755,12 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!4 &746020532 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 1049326821, guid: de0482fda15dfe4418a94a0eabd874a2,
+    type: 3}
+  m_PrefabInstance: {fileID: 947778549}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &746272781
 GameObject:
   m_ObjectHideFlags: 0
@@ -12101,6 +12107,11 @@ PrefabInstance:
         type: 3}
       propertyPath: moveSpeed
       value: 7
+      objectReference: {fileID: 0}
+    - target: {fileID: 9053584557667821996, guid: de0482fda15dfe4418a94a0eabd874a2,
+        type: 3}
+      propertyPath: m_Enabled
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: de0482fda15dfe4418a94a0eabd874a2, type: 3}
@@ -17927,6 +17938,39 @@ Transform:
     type: 3}
   m_PrefabInstance: {fileID: 1463041162}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &1465905153 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 36136380424880551, guid: de0482fda15dfe4418a94a0eabd874a2,
+    type: 3}
+  m_PrefabInstance: {fileID: 947778549}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &1465905154
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1465905153}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fa21cdf8deac4ae9b863daca4663391b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  moveSpeed: 3
+  jumpForce: 600
+  playerHealth: 1
+  whatIsGround:
+    serializedVersion: 2
+    m_Bits: 1536
+  groundCheck: {fileID: 746020532}
+  constantMoving: 1
+  playerCanMove: 1
+  coinSFX: {fileID: 0}
+  deathSFX: {fileID: 0}
+  fallSFX: {fileID: 0}
+  jumpSFX: {fileID: 0}
+  victorySFX: {fileID: 0}
+  constantMoveSpeed: 7
 --- !u!1001 &1468171930
 PrefabInstance:
   m_ObjectHideFlags: 0
