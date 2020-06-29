@@ -4,7 +4,7 @@ public class EnemyAttack : MonoBehaviour
 {
     void OnCollisionEnter2D(Collision2D other)
     {
-        if (other.gameObject.tag == "Player" && other.gameObject.GetComponent<CharacterController2D>().GetIsAttacking())
+        if (other.gameObject.tag == "Player" && other.gameObject.GetComponent<CharacterControllerMovable>().GetIsAttacking())
         {
             Debug.Log("Starting colliding with enemy");
             {
@@ -15,7 +15,7 @@ public class EnemyAttack : MonoBehaviour
         }
         else
         {
-            other.gameObject.GetComponent<CharacterController2D>().FallDeath();
+            other.gameObject.GetComponent<CharacterControllerMovable>().FallDeath();
         }
     }
 }
